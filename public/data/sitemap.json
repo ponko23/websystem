@@ -1,0 +1,16 @@
+{
+  "siteMap": [
+    {
+      "title": "Home",
+      "path": "/"
+    },
+    {
+      "title": "Profile",
+      "path": "/profile/"
+    },
+    {
+      "title": "TimeSheet",
+      "path": "/timesheet/"
+    }
+  ]
+}

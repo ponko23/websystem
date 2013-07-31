@@ -1,0 +1,44 @@
+extends layout
+
+block script
+  script(src='/javascripts/TimeSheet.js')
+
+block content
+  main
+    h2= title
+    div(id='monthControl')
+      input(type='button', value='◀', id='backMonth')
+      p=
+      input(type='button', value='▶', id='nextMonth')
+
+    table(id='tsTable')
+  div(id='lightbox', onClick='hiddenInput()')
+
+  form(action='/timesheet', id='inputform')
+    fieldset
+      legend= '勤怠入力'
+
+      label= '日付：'
+        input(type='txt', name='day', id='day', readonly='true')
+      label= '勤怠：'
+        select(id='attendance', name='attendance')
+          option(label='出勤', value='出勤')
+          option(label='欠勤', value='欠勤')
+          option(label='遅刻', value='遅刻')
+          option(label='早退', value='早退')
+          option(label='忌引', value='忌引')
+          option(label='有給', value='有給')
+      label= '始業時間：'
+        input(type='time', name='opening', id='opening')
+      label= '終業時間：'
+        input(type='time', name='closing', id='closing')
+      label= '休憩時間：'
+        input(type='time', name='breakTime', id='breakTime')
+      label= '深夜休憩：'
+        input(type='time', name='nightBreak', id='nightBreak')
+      label= '連絡事項：'
+        input(type='text', name='note', id='note')
+      div
+        input(type='button', value='登録', onclick='sendRecord()')
+        input(type='button', value='キャンセル', onclick='hiddenInput()')
+        input(type='button', value='削除', onclick='deleteRecord()', id='delete')

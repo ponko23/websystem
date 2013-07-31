@@ -1,0 +1,40 @@
+extends layout
+
+block content
+  main
+    h2= title
+
+    form(action='/profile', method='post', id='user')
+      fieldset
+        legend= 'プロフィール'
+
+        div
+          label= 'ユーザーID：'
+            input(type='txt', name='userId', readonly='true')
+        div
+          label= '名前：'
+            input(type='txt', name='name', readonly='true')
+        div
+          label= 'ふりがな：'
+            input(type='txt', name='phonetic', readonly='true')
+        div
+          label= '生年月日：'
+            input(type='date', name='birthDay', readonly='true')
+        div
+          label= '郵便番号：'
+            input(type='txt', name='zip', readonly='true')
+        div
+          label= '住所：'
+            input(type='txt', name='address', readonly='true')
+        div
+          label= '電話番号：'
+            input(type='tel', name='phone', readonly='true')
+        div
+          label= 'メールアドレス：'
+            input(type='email', name='email', readonly='true')
+        div
+          label= 'ポートフォリオ：'
+            input(type='url', name='url', readonly='true')
+        div
+          label= '備考：'
+            input(type='txt', name='note', readonly='true')

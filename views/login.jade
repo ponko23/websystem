@@ -1,9 +1,15 @@
-extends layout
-
-block style
-
-block script
+extends login_layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  main
+    h1= title
+    div
+      form(action='/login', method='post')
+        p
+          input(type='text',name='email',placeholder='Email')
+        p
+          input(type='password',name='password',placeholder='Password')
+        p
+          label.checkbox.gray ログイン状態を保存
+            input(type='checkbox')
+          button.btn.btn-primary(type='submit') ログイン
