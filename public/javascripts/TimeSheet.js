@@ -69,40 +69,53 @@ addMonth = function(yearMonth, addmon) {
 };
 
 sendRecord = function() {
-  var yearMonth;
+  var query, yearMonth;
   yearMonth = $('#day').val().split('/');
-  $.ajax({
+  query = {
+    day: $('#day').val(),
+    attendance: $('#attendance').val()
+  };
+  if ($('#opening').val()) {
+    query['opening'] = $('#opening').val();
+  }
+  if ($('#closing').val()) {
+    query['closing'] = $('#closing').val();
+  }
+  if ($('#breakTime').val()) {
+    query['breakTime'] = $('#breakTime').val();
+  }
+  if ($('#nightBreak').val()) {
+    query['nightBreak'] = $('#nightBreak').val();
+  }
+  if ($('#note').val()) {
+    query['note'] = $('#note').val();
+  }
+  return $.ajax({
     type: 'post',
     url: '/timesheet/',
-    data: {
-      'day': $('#day').val(),
-      'attendance': $('#attendance').val(),
-      'opening': $('#opening').val(),
-      'closing': $('#closing').val(),
-      'breakTime': $('#breakTime').val(),
-      'nightBreak': $('#nightBreak').val(),
-      'note': $('#note').val()
-    },
-    success: function() {}
+    data: query,
+    success: function() {
+      hiddenInput();
+      return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
+    }
   });
-  hiddenInput();
-  return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
 };
 
 deleteRecord = function() {
   var yearMonth;
   yearMonth = $('#day').val().split('/');
-  $.ajax({
+  return $.ajax({
     type: 'post',
     url: '/timesheet/',
     data: {
-      'day': $('#day').val(),
-      'delete': true
+      day: $('#day').val(),
+      delFlag: true
     },
-    success: function() {}
+    success: function() {
+      hiddenInput();
+      return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
+    }
   });
-  hiddenInput();
-  return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
 };
 
 $(document).ready(function() {

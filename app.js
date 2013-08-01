@@ -38,7 +38,7 @@ app.configure(function() {
     }),
     cookie: {
       httpOnly: false,
-      maxAge: new Date(Date.now() + 60 * 60 * 1000)
+      maxAge: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
     }
   }));
   app.use(app.router);

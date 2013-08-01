@@ -1,6 +1,11 @@
-model = require("../models/user.js")
 TITLE = "Login"
 
+model = require("../models/user.js")
+
+###
+  画面表示処理
+  login済で開こうとするとホーム画面に移動する
+###
 exports.get = (req, res) ->
   if req.session.user
     res.redirect '/'
@@ -8,44 +13,45 @@ exports.get = (req, res) ->
     res.render "login",
       title: TITLE
 
+###
+  login処理
+  mailaddressとpasswordからhasshを作成してデータベースにあるかを確認
+  あればホーム画面を表示する
+###
 exports.post = (req,res) ->
-  console.log req.body
-  email = req.body.email
   userId = ''
-  query =
-    email: email
+  query = email : req.body.email
+
   staff = model.staff
-#  staff1 = new staff
-#  staff1.userId = "ENG0002"
-#  staff1.email = "def@com"
-#  staff1.save (err) ->
   staff.findOne query, (err, data) ->
     console.log err if err
+
     userId = data.userId if data && data.userId
-  password = req.body.password
-  crypto = require 'crypto'
-  md5 = (str) ->
-    crypto.createHash('md5').update(str + 'ponko23').digest("Hex")
-  passHash = md5 userId + password
-  console.log passHash
-  query =
-    passHash: passHash
-  auth = model.auth
-  auth.findOne query, (err, data) ->
-    console.log err if err
-    console.log data
-    if data
-      req.session.user = userId #userが更新される前にappのredirectが呼ばれている？
-      console.log 'true'
-      res.redirect "/"
-    else
-      console.log 'false'
+    crypto = require 'crypto'
 
-      res.render "login",
-        title: TITLE
+    md5 = (str) ->
+      keyword = 'ponko23' #ハッシュ作成用の追加文字列
+      crypto.createHash('md5').update(str + keyword).digest("Hex")
 
+    query = passHash : md5 userId + req.body.password
+
+    auth = model.auth
+    auth.findOne query, (err, data) ->
+      console.log err if err
+
+      if data
+        req.session.user = userId
+        res.redirect "/"
+      else
+        res.render "login",
+          title: TITLE
+
+###
+  logout処理
+  セッション破棄してログイン画面に戻る
+###
 exports.logout = (req, res) ->
-  console.log req.session
   req.session.destroy()
-
   res.redirect "/login"
+
+# 一旦完成 2013/8/1

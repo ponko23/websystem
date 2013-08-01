@@ -36,7 +36,6 @@ tableWrite = (yearMonth) ->
       tsData.push '</tbody>'
       $('#tsTable').append tsData.join ''
 
-
 showInput = (day) ->
   $('#day').val day
   $('#lightbox').addClass 'show'
@@ -56,20 +55,27 @@ addMonth = (yearMonth, addmon) ->
 
 sendRecord = () ->
   yearMonth = $('#day').val().split '/'
+  query =
+    day: $('#day').val()
+    attendance: $('#attendance').val()
+  if $('#opening').val()
+    query['opening'] = $('#opening').val()
+  if $('#closing').val()
+    query['closing'] = $('#closing').val()
+  if $('#breakTime').val()
+    query['breakTime'] = $('#breakTime').val()
+  if $('#nightBreak').val()
+    query['nightBreak'] = $('#nightBreak').val()
+  if $('#note').val()
+    query['note'] = $('#note').val()
+
   $.ajax
     type: 'post'
     url: '/timesheet/'
-    data:
-      'day': $('#day').val()
-      'attendance': $('#attendance').val()
-      'opening': $('#opening').val()
-      'closing': $('#closing').val()
-      'breakTime': $('#breakTime').val()
-      'nightBreak': $('#nightBreak').val()
-      'note': $('#note').val()
+    data: query
     success: () ->
-  hiddenInput()
-  tableWrite yearMonth[0] + '/' + yearMonth[1]
+      hiddenInput()
+      tableWrite yearMonth[0] + '/' + yearMonth[1]
 
 deleteRecord = () ->
   yearMonth = $('#day').val().split '/'
@@ -77,11 +83,11 @@ deleteRecord = () ->
     type: 'post'
     url: '/timesheet/'
     data:
-      'day': $('#day').val()
-      'delete': true
+      day: $('#day').val()
+      delFlag: true
     success: () ->
-  hiddenInput()
-  tableWrite yearMonth[0] + '/' + yearMonth[1]
+      hiddenInput()
+      tableWrite yearMonth[0] + '/' + yearMonth[1]
 
 $(document).ready ->
   tmpDate = new Date()
