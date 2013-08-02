@@ -37,31 +37,41 @@ exports.post = (req, res) ->
     day: date[2]
 
   TimeSheet.findOne query, (err, result) ->
+    console.log err if err
     if result
       if result.author #承認済みの場合は中断（本来は通らないはず）
-        res.redirect '/timesheet'
         res.redirect 'back'
         return
 
       id = result._id
 
-      TimeSheet.remove _id: id, (err) ->
+      TimeSheet.remove _id: id, () ->
 
-      if req.body.delFlag
+      if req.body.delFlag #削除フラグが立っていればデータの追加は行わない
         res.redirect 'back'
         return
-
     addQuery = req.body
+    addQuery['_id'] = id if id
     addQuery['user'] = req.session.user
     addQuery['yearMonth'] = date[0] + '/' + date[1]
     addQuery['day'] = date[2]
-    if id
-      addQuery['_id'] = id
 
     addTimesheet = new TimeSheet addQuery
     addTimesheet.save (err) ->
-      if err
-        console.log err
-        res.redirect 'back'
-      else
-        res.redirect 'back'
+      console.log err if err
+      res.redirect 'back'
+
+###
+  2013/8/2 一旦完成
+  現状レコード更新時の動作が
+  ブラウザ        サーバ     DB
+          ①post→
+                        ②更新→
+          ←res③
+          ④get→
+                        ⑤抽出→
+          ←json⑥
+
+  となっているので、
+  ②→⑤→⑥としてしまいたい
+###

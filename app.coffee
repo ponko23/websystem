@@ -29,7 +29,7 @@ app.configure ->
     )
     cookie:
       httpOnly: false
-      maxAge: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000)
+      maxAge: new Date(Date.now() + 24 * 60 * 60 * 1000)
   )
 
   app.use app.router
@@ -67,6 +67,8 @@ app.get '/timesheet', loginCheck, timesheet.get
 app.get '/timesheet/:yearMonth', loginCheck, timesheet.findThisMonth
 app.post '/timesheet', loginCheck, timesheet.post
 
+reimbursable = require './routes/reimbursable'
+app.get '/reimbursable', loginCheck, reimbursable.get
 
 # サーバー起動
 https.createServer(options, app).listen app.get('port'), ->

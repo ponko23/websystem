@@ -10,10 +10,10 @@ tableWrite = function(yearMonth) {
     dataType: 'json',
     type: 'GET',
     success: function(obj) {
-      var countDay, day, daysOfMonth, i, tmp, tsData, _i;
+      var countDay, day, daysOfMonth, i, thisYearMonth, tmp, today, tsData, _i;
       $('#tsTable').empty();
       tsData = [];
-      tsData.push('<tbody><tr><th>入力</th><th>日付</th><th>曜日</th><th>勤怠</th><th>始業時間</th><th>終業時間</th><th>休憩時間</th><th>深夜休憩</th><th>連絡事項</th><th>承認</th></tr>');
+      tsData.push('<tbody><tr><th width="5%">入力</th><th width="5%">日付</th><th width="5%">曜日</th><th width="10%">勤怠</th><th width="10%">始業時間</th><th width="10%">終業時間</th><th width="10%">休憩時間</th><th width="10%">深夜休憩</th><th>連絡事項</th><th width="10%">承認</th></tr>');
       tmp = yearMonth.split('/');
       daysOfMonth = new Date(tmp[0], tmp[1], 0).getDate() + 1;
       i = 0;
@@ -40,7 +40,12 @@ tableWrite = function(yearMonth) {
         }
       }
       tsData.push('</tbody>');
-      return $('#tsTable').append(tsData.join(''));
+      $('#tsTable').append(tsData.join(''));
+      today = new Date();
+      thisYearMonth = today.getFullYear() + '/' + (today.getMonth() + 1);
+      if (thisYearMonth === yearMonth) {
+        return $('#tsTable tbody tr').eq(today.getDate()).css('background-color', '#aaffaa');
+      }
     }
   });
 };
@@ -53,7 +58,9 @@ showInput = function(day) {
 
 hiddenInput = function() {
   $('#lightbox').removeClass('show');
-  return $('#inputform').removeClass('show');
+  $('#inputform').removeClass('show');
+  $('.optional').val('');
+  return $('#inputform select option').eq(0).attr('selected', '出勤');
 };
 
 addMonth = function(yearMonth, addmon) {
@@ -123,3 +130,8 @@ $(document).ready(function() {
   tmpDate = new Date();
   return tableWrite(tmpDate.getFullYear() + '/' + (tmpDate.getMonth() + 1));
 });
+
+/*
+  2013/8/2 一旦完成
+*/
+

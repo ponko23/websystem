@@ -58,36 +58,52 @@ exports.post = function(req, res) {
   };
   return TimeSheet.findOne(query, function(err, result) {
     var addQuery, addTimesheet, id;
+    if (err) {
+      console.log(err);
+    }
     if (result) {
       if (result.author) {
-        res.redirect('/timesheet');
         res.redirect('back');
         return;
       }
       id = result._id;
       TimeSheet.remove({
         _id: id
-      }, function(err) {});
+      }, function() {});
       if (req.body.delFlag) {
         res.redirect('back');
         return;
       }
     }
     addQuery = req.body;
-    addQuery['user'] = req.session.user;
-    addQuery['yearMonth'] = date[0] + '/' + date[1];
-    addQuery['day'] = date[2];
     if (id) {
       addQuery['_id'] = id;
     }
+    addQuery['user'] = req.session.user;
+    addQuery['yearMonth'] = date[0] + '/' + date[1];
+    addQuery['day'] = date[2];
     addTimesheet = new TimeSheet(addQuery);
     return addTimesheet.save(function(err) {
       if (err) {
         console.log(err);
-        return res.redirect('back');
-      } else {
-        return res.redirect('back');
       }
+      return res.redirect('back');
     });
   });
 };
+
+/*
+  2013/8/2 一旦完成
+  現状レコード更新時の動作が
+  ブラウザ        サーバ     DB
+          ①post→
+                        ②更新→
+          ←res③
+          ④get→
+                        ⑤抽出→
+          ←json⑥
+
+  となっているので、
+  ②→⑤→⑥としてしまいたい
+*/
+

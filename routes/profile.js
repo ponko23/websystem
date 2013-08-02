@@ -9,6 +9,7 @@ TITLE = "Profile";
 
 exports.get = function(req, res) {
   return res.render("profile", {
-    title: TITLE
+    title: TITLE,
+    userName: '水口 康平'
   });
 };

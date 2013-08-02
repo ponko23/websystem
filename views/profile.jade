@@ -1,40 +1,63 @@
 extends layout
 
+block script
+  script(src='/javascripts/Profile.js')
+
 block content
   main
     h2= title
 
-    form(action='/profile', method='post', id='user')
+    form(action='/profile/info', method='post', id='info')
       fieldset
-        legend= 'プロフィール'
-
+        legend 基本情報
         div
-          label= 'ユーザーID：'
+          label ユーザーID：
             input(type='txt', name='userId', readonly='true')
         div
-          label= '名前：'
-            input(type='txt', name='name', readonly='true')
+          label 名前：
+            input(type='txt', name='name', value= userName, class='edit', readonly='true')
         div
-          label= 'ふりがな：'
-            input(type='txt', name='phonetic', readonly='true')
+          label ふりがな：
+            input(type='txt', name='phonetic', class='edit', readonly='true')
         div
-          label= '生年月日：'
-            input(type='date', name='birthDay', readonly='true')
+          label 生年月日：
+            input(type='date', name='birthDay', class='edit', readonly='true')
         div
-          label= '郵便番号：'
-            input(type='txt', name='zip', readonly='true')
+          label 郵便番号：
+            input(type='txt', name='zip', class='edit', readonly='true')
         div
-          label= '住所：'
-            input(type='txt', name='address', readonly='true')
+          label 住所：
+            input(type='txt', name='address', class='edit', readonly='true')
         div
-          label= '電話番号：'
-            input(type='tel', name='phone', readonly='true')
+          label 電話番号：
+            input(type='tel', name='phone', class='edit', readonly='true')
         div
-          label= 'メールアドレス：'
-            input(type='email', name='email', readonly='true')
+          label メールアドレス：
+            input(type='email', name='email', class='edit', readonly='true')
         div
-          label= 'ポートフォリオ：'
-            input(type='url', name='url', readonly='true')
+          label ポートフォリオ：
+            input(type='url', name='url', class='edit', readonly='true')
         div
-          label= '備考：'
-            input(type='txt', name='note', readonly='true')
+          label 備考：
+            input(type='txt', name='note', class='edit', readonly='true')
+        div
+          input(type='button', value='編集', id='profileEdit', onclick='editOn()')
+          input(type='reset', value='キャンセル', id='reset', style='display:none')
+
+    form(action='/profile/career', method='post', id='career')
+      fieldset
+        legend 職歴
+        input(type='button', value='追加', onclick='')
+        table
+
+    form(action='/profile/skill', method='post', id='skill')
+      fieldset
+        legend スキル
+        input(type='button', value='追加', onclick='')
+        table
+
+    form(action='/profile/license', method='post', id='license')
+      fieldset
+        legend 資格
+        input(type='button', value='追加', onclick='')
+        table

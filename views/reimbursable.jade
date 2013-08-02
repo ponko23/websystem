@@ -1,0 +1,40 @@
+extends layout
+
+block script
+  script(src='/javascripts/Reimbursable.js')
+
+block content
+  main
+    h2= title
+    div(id='monthControl')
+      input(type='button', value='◀', id='backMonth')
+      p=
+      input(type='button', value='▶', id='nextMonth')
+
+    table(id='rsTable')
+  div(id='lightbox', onClick='hiddenInput()')
+
+  form(action='/reimbursable', id='inputform')
+    fieldset
+      legend 実費精算入力
+
+      label 日付：
+        input(type='txt', name='day', id='day', readonly='true')
+      label 適用：
+        select(id='', name='')
+          option(label='交通費', value='交通費')
+          option(label='宿泊費', value='宿泊費')
+          option(label='物品購入費', value='物品購入費')
+          option(label='その他', value='その他')
+      label 支払先：
+        input(type='time', name='', id='', class='')
+      label 金額：
+        input(type='time', name='', id='', class='')
+      label 金額：
+        input(type='time', name='', id='', class='')
+      label 連絡事項：
+        input(type='text', name='note', id='note', class='optional')
+      div
+        input(type='button', value='登録', onclick='sendRecord()')
+        input(type='button', value='キャンセル', onclick='hiddenInput()')
+        input(type='button', value='削除', onclick='deleteRecord()', id='delete')
