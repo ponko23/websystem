@@ -18,7 +18,6 @@ navWrite = () ->
   url = location.pathname
   $("nav a[href=\"#{url}\"]").css 'background-color', '#fff'
 
-
 ###
   $.ajax
     url: '/data/sitemap.json'

@@ -36,7 +36,7 @@ exports.post = function(req, res) {
   };
   staff = model.staff;
   return staff.findOne(query, function(err, data) {
-    var auth, crypto, md5;
+    var authInfo, crypto, md5;
     if (err) {
       console.log(err);
     }
@@ -49,11 +49,9 @@ exports.post = function(req, res) {
       keyword = 'ponko23';
       return crypto.createHash('md5').update(str + keyword).digest("Hex");
     };
-    query = {
-      passHash: md5(userId + req.body.password)
-    };
-    auth = model.auth;
-    return auth.findOne(query, function(err, data) {
+    console.log(md5(userId + req.body.password));
+    authInfo = model.authInfo;
+    return authInfo.findOne(query, function(err, data) {
       if (err) {
         console.log(err);
       }

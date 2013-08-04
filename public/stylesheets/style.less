@@ -1,3 +1,11 @@
+@BGC: #fff; // background-color
+@FC: #000; // font color
+@BBGC: #ccc; // button background-color
+@BFC: #000; // button font color
+@BBGCH: #fd6; // button background-color hover
+@HLBFC: #5af; // highlight background-color
+@HLFC: #fff; // heighlight font color
+
 * {
   padding: 0;
   margin: 0;
@@ -11,170 +19,172 @@ body {
   line-height: 1;
   background-color: #fff;
   z-index: 0;
-}
-body > header {
-  background-color: #5af;
-  width: 100%;
-  height: 28px;
-}
-body > header > h1 {
-  margin: 0;
-  padding: 2px 5px;
-  color: #fff;
-  float: left;
-  font-size: 1.5em;
-}
-body > header > h1 > a {
-  text-decoration: none;
-  color: #fff;
-}
-body > header > #logout {
-  display: block;
-  text-decoration: none;
-  color: #000;
-  font-size: .75em;
-  background-color: #ccc;
-  font-weight: bold;
-  margin: 3px;
-  padding-top: 5px;
-  text-align: center;
-  width: 50px;
-  height: 22px;
-  float: right;
-  cursor: pointer;
-}
-body > header > #logout:hover {
-  background-color: #fd6;
-}
-body > nav {
-  width: 100%;
-  clear: both;
-}
-body > nav > ul {
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  list-style-type: none;
-  background-color: #ccc;
-}
-body > nav > ul > li {
-  -webkit-box-flex: 1;
-  border-right: solid 1px #000;
-}
-body > nav > ul > li > a {
-  display: block;
-  min-width: 80px;
-  padding: 5px 2px;
-  color: #000;
-  text-align: center;
-  text-decoration: none;
-  font-size: 0.75em;
-  font-weight: bold;
-  cursor: pointer;
-}
-body > nav > ul > li > a:hover {
-  background-color: #fd6;
-}
-body > nav > ul li:last-child {
-  border: none;
-}
-body main {
-  padding: 5px 0;
-}
-body main h2 {
-  margin-left: .5em;
-  margin-bottom: .5em;
-}
-body main p {
-  line-height: 1.3em;
-}
-body main #monthControl {
-  height: 2em;
-  padding: 5px 10px;
-}
-body main #monthControl input {
-  margin: 0 1em;
-  float: left;
-}
-body main #monthControl p {
-  float: left;
-}
-body main #monthControl input[type="button"] {
-  width: 1.2em;
-  height: 1.2em;
-  border: none;
-  background-color: #ccc;
-  font-size: 1em;
-  cursor: pointer;
-}
-body main #monthControl input[type="button"]:hover {
-  background-color: #fd6;
-}
-body main table {
-  clear: left;
-  width: 100%;
-  border-spacing: 0;
-  border-top: solid 1px #000;
-  border-right: solid 1px #000;
-}
-body main table th,
-body main table td {
-  text-align: center;
-  border-bottom: solid 1px #000;
-  border-left: solid 1px #000;
-  height: 1.2em;
-}
-body main table th {
-  padding: 2px;
-  background: #5af;
-  color: #fff;
-}
-body main table td:first-child[onclick] {
-  background-color: #ccc;
-  cursor: pointer;
-}
-body main table td:first-child[onclick]:hover {
-  background-color: #fd6;
-}
-body #inputform {
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  margin-left: -140px;
-  margin-top: -150px;
-  width: 280px;
-  height: 300px;
-  padding: 20px;
-  background-color: #fff;
-  line-height: 1.5em;
-  visibility: hidden;
-  z-index: 2;
-}
-body #inputform label {
-  clear: left;
-  margin-left: 10px;
-  margin-top: 2px;
-  height: auto;
-  display: block;
-}
-body #inputform div input[type="button"] {
-  margin-left: 10px;
-}
-body #inputform.show {
-  visibility: visible;
-}
-body > footer {
-  background-color: #5af;
-}
-body > #lightbox {
-  display: none;
-  z-index: 1;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.8);
-}
-body > #lightbox.show {
-  display: block;
+  header {
+    background-color: #5af;
+    width: 100%;
+    height: 28px;
+    h1 {
+      margin: 0;
+      padding: 2px 5px;
+      color: #fff;
+      float: left;
+      font-size: 1.5em;
+      a {
+        text-decoration: none;
+        color: #fff;
+      }
+    }
+    #logout {
+      display: block;
+      text-decoration: none;
+      color: #000;
+      font-size: .75em;
+      background-color: #ccc;
+      font-weight: bold;
+      margin: 3px;
+      padding-top: 5px;
+      text-align: center;
+      width: 50px;
+      height: 22px;
+      float: right;
+      cursor: pointer;
+    }
+    #logout:hover {
+      background-color: #fd6;
+    }
+  }
+  nav {
+    width: 100%;
+    clear: both;
+    ul {
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      list-style-type: none;
+      background-color: #ccc;
+      li {
+        -webkit-box-flex: 1;
+        border-right: solid 1px #000;
+        a {
+          display: block;
+          min-width: 80px;
+          padding: 5px 2px;
+          color: #000;
+          text-align: center;
+          text-decoration: none;
+          font-size: 0.75em;
+          font-weight: bold;
+          cursor: pointer;
+        }
+        a:hover {
+          background-color: #fd6;
+        }
+      }
+      li:last-child {
+        border: none;
+      }
+    }
+  }
+  main {
+    padding: 5px 0;
+    h2 {
+      margin-left: .5em;
+      margin-bottom: .5em;
+    }
+    p {
+      line-height: 1.3em;
+    }
+    #monthControl {
+      height: 2em;
+      padding: 5px 10px;
+    }
+    #monthControl {
+      input {
+        margin: 0 1em;
+        float: left;
+      }
+      p {
+        float: left;
+      }
+      input[type="button"] {
+        width: 1.2em;
+        height: 1.2em;
+        border: none;
+        background-color: #ccc;
+        font-size: 1em;
+        cursor: pointer;
+      }
+      input[type="button"]:hover {
+        background-color: #fd6;
+      }
+    }
+    table {
+      clear: left;
+      width: 100%;
+      border-spacing: 0;
+      border-top: solid 1px #000;
+      border-right: solid 1px #000;
+      th, td {
+        text-align: center;
+        border-bottom: solid 1px #000;
+        border-left: solid 1px #000;
+        height: 1.2em;
+      }
+      th {
+        padding: 2px;
+        background: #5af;
+        color: #fff;
+      }
+      td:first-child[onclick] {
+        background-color: #ccc;
+        cursor: pointer;
+      }
+      td:first-child[onclick]:hover {
+        background-color: #fd6;
+      }
+    }
+  }
+  #lightbox {
+    display: none;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+  }
+  #lightbox.show {
+    display: block;
+  }
+  #inputform {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    margin-left: -140px;
+    margin-top: -150px;
+    width: 280px;
+    height: 300px;
+    padding: 20px;
+    background-color: #fff;
+    line-height: 1.5em;
+    visibility: hidden;
+    z-index: 2;
+    label {
+      clear: left;
+      margin-left: 10px;
+      margin-top: 2px;
+      height: auto;
+      display: block;
+    }
+    div input[type="button"] {
+      margin-left: 10px;
+    }
+  }
+  #inputform.show {
+    visibility: visible;
+  }
+  footer {
+    background-color: #5af;
+  }
+
 }

@@ -11,9 +11,9 @@ db = mongoose.createConnection(url, (err) ->
 authSchema = new mongoose.Schema(
   passHash: String
 ,
-  collection: 'authentication'
+  collection: 'authInfo'
 )
-exports.auth = db.model("auth", authSchema)
+exports.authInfo = db.model("authInfo", authSchema)
 
 staffSchema = new mongoose.Schema(
   userId: String

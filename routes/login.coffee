@@ -32,11 +32,10 @@ exports.post = (req,res) ->
     md5 = (str) ->
       keyword = 'ponko23' #ハッシュ作成用の追加文字列
       crypto.createHash('md5').update(str + keyword).digest("Hex")
-
-    query = passHash : md5 userId + req.body.password
-
-    auth = model.auth
-    auth.findOne query, (err, data) ->
+    #query = passHash : md5 userId + req.body.password #ハッシュ確認用
+    console.log md5 userId + req.body.password
+    authInfo = model.authInfo
+    authInfo.findOne query, (err, data) ->
       console.log err if err
 
       if data
