@@ -12,34 +12,34 @@ block content
         legend 基本情報
         div
           label ユーザーID：
-            input(type='txt', name='userId', value= userId, readonly='true')
+            input(type='txt', name='userId', value= info.userId, readonly='true')
         div
           label 名前：
-            input(type='txt', name='name', value= name, class='edit', readonly='true')
+            input(type='txt', name='name', value= info.name, class='edit', readonly='true')
         div
           label ふりがな：
-            input(type='txt', name='phonetic', value= phonetic, class='edit', readonly='true')
+            input(type='txt', name='phonetic', value= info.phonetic, class='edit', readonly='true')
         div
           label 生年月日：
-            input(type='date', name='birthDay', value= birthDay, class='edit', readonly='true')
+            input(type='date', name='birthDay', value= info.birthDay, class='edit', readonly='true')
         div
           label 郵便番号：
-            input(type='txt', name='zip', value= zip, class='edit', readonly='true')
+            input(type='txt', name='zip', value= info.zip, class='edit', readonly='true')
         div
           label 住所：
-            input(type='txt', name='address', value= address, class='edit', readonly='true')
+            input(type='txt', name='address', value= info.address, class='edit', readonly='true')
         div
           label 電話番号：
-            input(type='tel', name='phone', value= phone, class='edit', readonly='true')
+            input(type='tel', name='phone', value= info.phone, class='edit', readonly='true')
         div
           label メールアドレス：
-            input(type='email', name='email', value= email, class='edit', readonly='true')
+            input(type='email', name='email', value= info.email, class='edit', readonly='true')
         div
           label ポートフォリオ：
-            input(type='url', name='url', value= url, class='edit', readonly='true')
+            input(type='url', name='url', value= info.url, class='edit', readonly='true')
         div
           label 備考：
-            input(type='txt', name='note', value= note, class='edit', readonly='true')
+            input(type='txt', name='note', value= info.note, class='edit', readonly='true')
         div
           input(type='button', value='編集', id='profileEdit', onclick='editOn()')
           input(type='reset', value='キャンセル', id='reset', style='display:none')

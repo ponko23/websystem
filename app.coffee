@@ -61,6 +61,7 @@ app.get '/login/logout', loginCheck, login.logout
 
 profile = require './routes/profile'
 app.get '/profile', loginCheck, profile.get
+app.post '/profile/info', loginCheck, profile.infoUpdata
 
 timesheet = require './routes/timesheet'
 app.get '/timesheet', loginCheck, timesheet.get

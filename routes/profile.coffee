@@ -1,17 +1,46 @@
-model = require("../models/user.js")
-staff = model.staff
 TITLE = "Profile"
 
+model = require("../models/user.js")
+staff = model.staff
+
 exports.get = (req, res) ->
-  res.render "profile",
-    title: TITLE
-    userId: 'ENG001'
-    name: 'テスト太郎'
-    phonetic: 'てすとたろう'
-    birthDay: '1990/1/1'
-    zip: '061111'
-    address: '大阪府のどこか'
-    phone: '09012345678'
-    email: 'abc@com'
-    url: 'https://github.com'
-    note: 'テストプロフィールです'
+  query =
+    userId: req.session.user
+  staff.findOne query, (err, result) ->
+    console.log err if err
+    if result
+      res.render "profile",
+        title: TITLE
+        info:
+          userId: result.userId
+          name: result.name
+          phonetic: result.phonetic
+          birthDay: result.birthDay
+          zip: result.zip
+          address: result.address
+          phone: result.phone
+          email: result.email
+          url: result.url
+          note: result.note
+        career:[
+          company: 'A社'
+          start: '2000/01/01'
+          end: '2005/12/31'
+        ]
+
+        skill:[
+          name: 'java'
+          old: 5
+        ]
+
+        license:[
+          name: 'it'
+          get: '2010/01/01'
+        ]
+
+
+exports.infoUpdata = (req, res) ->
+  query =
+    userId: req.userId
+
+  res.redirect 'back'
