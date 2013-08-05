@@ -27,13 +27,15 @@ exports.post = (req,res) ->
     console.log err if err
 
     userId = data.userId if data && data.userId
+    console.log userId
     crypto = require 'crypto'
 
     md5 = (str) ->
       keyword = 'ponko23' #ハッシュ作成用の追加文字列
       crypto.createHash('md5').update(str + keyword).digest("Hex")
-    #query = passHash : md5 userId + req.body.password #ハッシュ確認用
-    console.log md5 userId + req.body.password
+    query = passHash : md5 userId + req.body.password
+
+    console.log userId + req.body.password + ':' + md5 userId + req.body.password #ハッシュ確認用
     authInfo = model.authInfo
     authInfo.findOne query, (err, data) ->
       console.log err if err

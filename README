@@ -1,1 +1,7 @@
-This file was created by JetBrains WebStorm 6.0.2 for binding GitHub repository
+スタッフ情報とか勤怠管理とか支払い・請求管理とかのシステムを試作してみる。
+実装済
+  ログイン認証 2013/8/5
+  タイムシート画面 2013/8/5
+実装中
+  スタッフ情報画面
+  実費精算画面

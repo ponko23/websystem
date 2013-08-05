@@ -43,13 +43,17 @@ exports.post = function(req, res) {
     if (data && data.userId) {
       userId = data.userId;
     }
+    console.log(userId);
     crypto = require('crypto');
     md5 = function(str) {
       var keyword;
       keyword = 'ponko23';
       return crypto.createHash('md5').update(str + keyword).digest("Hex");
     };
-    console.log(md5(userId + req.body.password));
+    query = {
+      passHash: md5(userId + req.body.password)
+    };
+    console.log(userId + req.body.password + ':' + md5(userId + req.body.password));
     authInfo = model.authInfo;
     return authInfo.findOne(query, function(err, data) {
       if (err) {
