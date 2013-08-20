@@ -1,11 +1,11 @@
-editOn = () ->
+editOn = ->
   $('.edit').attr 'readOnly', false
   $('#profileEdit').attr
     value: '保存'
     onclick: 'editSave()'
   $('#reset').css 'display', 'block'
 
-editSave = () ->
+editSave = ->
   $('.edit').attr 'readOnly', true
   $('#profileEdit').attr
     value: '編集'

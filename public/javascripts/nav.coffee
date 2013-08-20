@@ -1,4 +1,4 @@
-navWrite = () ->
+navWrite = ->
   obj = [
     "title": "Home"
     "path": "/"

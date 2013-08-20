@@ -10,6 +10,7 @@ block content
       input(type='button', value='◀', id='backMonth')
       p=
       input(type='button', value='▶', id='nextMonth')
+      input(type='hidden', value='', id='yearMonth')
 
     table(id='tsTable')
   div(id='lightbox', onClick='hiddenInput()')
@@ -18,26 +19,33 @@ block content
     fieldset
       legend 勤怠入力
 
-      label 日付：
-        input(type='txt', name='day', id='day', readonly='true')
-      label 勤怠：
-        select(id='attendance', name='attendance')
-          option(label='出勤', value='出勤')
-          option(label='欠勤', value='欠勤')
-          option(label='遅刻', value='遅刻')
-          option(label='早退', value='早退')
-          option(label='忌引', value='忌引')
-          option(label='有給', value='有給')
-      label 始業時間：
-        input(type='time', name='opening', id='opening', class='optional')
-      label 終業時間：
-        input(type='time', name='closing', id='closing', class='optional')
-      label 休憩時間：
-        input(type='time', name='breakTime', id='breakTime', class='optional')
-      label 深夜休憩：
-        input(type='time', name='nightBreak', id='nightBreak', class='optional')
-      label 連絡事項：
-        input(type='text', name='note', id='note', class='optional')
+      label(for='day') 日付
+      input(type='txt', id='day', readonly='true')
+      br
+      label(for='attendance') 勤怠
+      select(id='attendance')
+        option(label='出勤', value='出勤')
+        option(label='欠勤', value='欠勤')
+        option(label='遅刻', value='遅刻')
+        option(label='早退', value='早退')
+        option(label='忌引', value='忌引')
+        option(label='有給', value='有給')
+      br
+      label(for='opening') 始業時間
+      input(type='time', id='opening', class='optional')
+      br
+      label(for='closing') 終業時間
+      input(type='time', id='closing', class='optional')
+      br
+      label(for='breakTime') 休憩時間
+      input(type='time', id='breakTime', class='optional')
+      br
+      label(for='nightBreak') 深夜休憩
+      input(type='time', name='nightBreak', id='nightBreak', class='optional')
+      br
+      label(for='note') 連絡事項
+      textarea(id='note', class='optional')
+      br
       div
         input(type='button', value='登録', onclick='sendRecord()')
         input(type='button', value='キャンセル', onclick='hiddenInput()')

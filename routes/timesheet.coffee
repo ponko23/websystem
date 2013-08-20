@@ -45,7 +45,7 @@ exports.post = (req, res) ->
 
       id = result._id
 
-      TimeSheet.remove _id: id, () ->
+      TimeSheet.remove _id: id, ->
 
       if req.body.delFlag #削除フラグが立っていればデータの追加は行わない
         res.redirect 'back'

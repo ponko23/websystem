@@ -2,63 +2,61 @@
 var addMonth, deleteRecord, hiddenInput, sendRecord, showInput, tableWrite;
 
 tableWrite = function(yearMonth) {
-  $('#monthControl > p').html((yearMonth.replace('/', '年')) + '月');
-  $('#monthControl > input:eq(0)').attr('onClick', 'tableWrite("' + addMonth(yearMonth, -1) + '")');
-  $('#monthControl > input:eq(1)').attr('onClick', 'tableWrite("' + addMonth(yearMonth, 1) + '")');
+  var monthControl;
+  monthControl = $('#monthControl');
+  monthControl.children('p').html((yearMonth.replace('/', '年')) + '月');
   return $.ajax({
     url: '/timesheet/' + yearMonth.replace('/', '-'),
     dataType: 'json',
-    type: 'GET',
-    success: function(obj) {
-      var countDay, day, daysOfMonth, i, thisYearMonth, tmp, today, tsData, _i;
-      $('#tsTable').empty();
-      tsData = [];
-      tsData.push('<tbody><tr><th width="5%">入力</th><th width="5%">日付</th><th width="5%">曜日</th><th width="10%">勤怠</th><th width="10%">始業時間</th><th width="10%">終業時間</th><th width="10%">休憩時間</th><th width="10%">深夜休憩</th><th>連絡事項</th><th width="10%">承認</th></tr>');
-      tmp = yearMonth.split('/');
-      daysOfMonth = new Date(tmp[0], tmp[1], 0).getDate() + 1;
-      i = 0;
-      for (day = _i = 1; 1 <= daysOfMonth ? _i < daysOfMonth : _i > daysOfMonth; day = 1 <= daysOfMonth ? ++_i : --_i) {
-        if (obj[i] && obj[i].day === day && obj[i].author) {
+    type: 'GET'
+  }).done(function(obj) {
+    var countDay, current, day, daysOfMonth, i, subData, thisYearMonth, tmp, today, tsData, _i;
+    $('#tsTable').empty();
+    tsData = [];
+    tsData.push('<tbody><tr><th width="5%">入力</th><th width="5%">日付</th><th width="5%">曜日</th><th width="10%">勤怠</th><th width="10%">始業時間</th><th width="10%">終業時間</th><th width="10%">休憩時間</th><th width="10%">深夜休憩</th><th>連絡事項</th><th width="10%">承認</th></tr>');
+    tmp = yearMonth.split('/');
+    daysOfMonth = new Date(tmp[0], tmp[1], 0).getDate() + 1;
+    i = 0;
+    for (day = _i = 1; 1 <= daysOfMonth ? _i < daysOfMonth : _i > daysOfMonth; day = 1 <= daysOfMonth ? ++_i : --_i) {
+      current = obj[i];
+      countDay = new Date(tmp[0], tmp[1] - 1, day).getDay();
+      subData = ['<td>', day, '</td>', '<td>', '日月火水木金土'[countDay], '</td>'].join('');
+      if (current && current.day === day) {
+        if (current.author) {
           tsData.push('<tr><td>〆</td>');
         } else {
-          tsData.push('<tr><td onClick="showInput(\'', yearMonth, '/', day, '\')">入力</td>');
+          tsData.push('<tr><td class="addRecord">入力</td>');
         }
-        tsData.push('<td>', day, '</td>');
-        countDay = new Date(tmp[0], tmp[1] - 1, day).getDay();
-        tsData.push('<td>', '日月火水木金土'[countDay], '</td>');
-        if (obj[i] && obj[i].day === day) {
-          tsData.push('<td>', obj[i].attendance, '</td>');
-          tsData.push('<td>', obj[i].opening, '</td>');
-          tsData.push('<td>', obj[i].closing, '</td>');
-          tsData.push('<td>', obj[i].breakTime, '</td>');
-          tsData.push('<td>', obj[i].nightBreak, '</td>');
-          tsData.push('<td>', obj[i].note, '</td>');
-          tsData.push('<td>', obj[i].author, '</td></tr>');
-          i++;
-        } else {
-          tsData.push('<td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
-        }
+        tsData.push(subData);
+        tsData.push('<td>', current.attendance, '</td>');
+        tsData.push('<td>', current.opening, '</td>');
+        tsData.push('<td>', current.closing, '</td>');
+        tsData.push('<td>', current.breakTime, '</td>');
+        tsData.push('<td>', current.nightBreak, '</td>');
+        tsData.push('<td>', current.note, '</td>');
+        tsData.push('<td>', current.author, '</td></tr>');
+        i++;
+      } else {
+        tsData.push('<tr><td class="addRecord">入力</td>', subData, '<td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>');
       }
-      tsData.push('</tbody>');
-      $('#tsTable').append(tsData.join(''));
-      today = new Date();
-      thisYearMonth = today.getFullYear() + '/' + (today.getMonth() + 1);
-      if (thisYearMonth === yearMonth) {
-        return $('#tsTable tbody tr').eq(today.getDate()).css('background-color', '#aaffaa');
-      }
+    }
+    tsData.push('</tbody>');
+    $('#tsTable').append(tsData.join(''));
+    today = new Date();
+    thisYearMonth = today.getFullYear() + '/' + (today.getMonth() + 1);
+    if (thisYearMonth === yearMonth) {
+      return $('#tsTable tbody tr').eq(today.getDate()).css('background-color', '#aaffaa');
     }
   });
 };
 
 showInput = function(day) {
   $('#day').val(day);
-  $('#lightbox').addClass('show');
-  return $('#inputform').addClass('show');
+  return $('#lightbox, #inputform').addClass('show');
 };
 
 hiddenInput = function() {
-  $('#lightbox').removeClass('show');
-  $('#inputform').removeClass('show');
+  $('#lightbox, #inputform').removeClass('show');
   $('.optional').val('');
   return $('#inputform select option').eq(0).attr('selected', '出勤');
 };
@@ -72,6 +70,7 @@ addMonth = function(yearMonth, addmon) {
     tmpArray[1] = 12;
   }
   tmpArray[0] = (tmp - parseInt(tmpArray[1])) / 12;
+  $('#yearMonth').val(tmpArray.join('/'));
   return tmpArray.join('/');
 };
 
@@ -100,11 +99,10 @@ sendRecord = function() {
   return $.ajax({
     type: 'post',
     url: '/timesheet/',
-    data: query,
-    success: function() {
-      hiddenInput();
-      return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
-    }
+    data: query
+  }).done(function() {
+    hiddenInput();
+    return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
   });
 };
 
@@ -117,21 +115,32 @@ deleteRecord = function() {
     data: {
       day: $('#day').val(),
       delFlag: true
-    },
-    success: function() {
-      hiddenInput();
-      return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
     }
+  }).done(function() {
+    hiddenInput();
+    return tableWrite(yearMonth[0] + '/' + yearMonth[1]);
   });
 };
 
-$(document).ready(function() {
-  var tmpDate;
+$(function() {
+  var tmpDate, yearMonth;
   tmpDate = new Date();
-  return tableWrite(tmpDate.getFullYear() + '/' + (tmpDate.getMonth() + 1));
+  yearMonth = tmpDate.getFullYear() + '/' + (tmpDate.getMonth() + 1);
+  $('#yearMonth').val(yearMonth);
+  tableWrite(yearMonth);
+  $('#backMonth').on('click', function() {
+    return tableWrite(addMonth($('#yearMonth').val(), -1));
+  });
+  $('#nextMonth').on('click', function() {
+    return tableWrite(addMonth($('#yearMonth').val(), 1));
+  });
+  return $('#tsTable').on('click', '.addRecord', function() {
+    return showInput(yearMonth + '/' + $(this).next().text());
+  });
 });
 
 /*
   2013/8/2 一旦完成
+  2013/8/20 onClick=""を排除、その他リファクタリング
 */
 

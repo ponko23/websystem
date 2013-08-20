@@ -134,11 +134,11 @@ body {
         background: #5af;
         color: #fff;
       }
-      td:first-child[onclick] {
+      .addRecord {
         background-color: #ccc;
         cursor: pointer;
       }
-      td:first-child[onclick]:hover {
+      .addRecord:hover {
         background-color: #fd6;
       }
     }
@@ -161,23 +161,39 @@ body {
     left: 50%;
     top: 50%;
     margin-left: -140px;
-    margin-top: -150px;
+    margin-top: -185px;
     width: 280px;
-    height: 300px;
+    height: 370px;
     padding: 20px;
     background-color: #fff;
     line-height: 1.5em;
     visibility: hidden;
     z-index: 2;
-    label {
-      clear: left;
-      margin-left: 10px;
-      margin-top: 2px;
-      height: auto;
+    label, input, select {
       display: block;
+      width: 55%;
+      float: left;
+      margin-bottom: 5px;
+    }
+    label {
+      width: 40%;
+      text-align: right;
+      padding-right: 10px;
+    }
+    input {
+    }
+    br {clear: left;}
+    textarea {
+      clear: left;
+      width: 90%;
+      height: 4em;
+      margin: 0 5% 10px 5%;
+      resize:none;
     }
     div input[type="button"] {
-      margin-left: 10px;
+      width: 30%;
+      margin-left: 5px;
+      margin-bottom: 5px;
     }
   }
   #inputform.show {
